@@ -11,8 +11,7 @@ migrations/*
 migrations/
 
 ### Log ###
-*.log
-*.log*
+*.log.*
 *.ini
 
 ### Database ###
