@@ -552,7 +552,7 @@ class CustomerOrder(Resource):
                     db.session.delete(delete_detail)
                     db.session.commit()
                 
-                return 'order created', 200
+                return marshal(new_order_details,Order.customer_fields), 200
         return 'bag not found', 404
             
         # 2 order from item direct cooming soon
@@ -598,7 +598,7 @@ class CustomerPayment(Resource):
         claims = get_jwt_claims()
         parser = reqparse.RequestParser()
         parser.add_argument('payment_oid', location='json', required=True)
-        parser.add_argument('payment_type', location='json', choices=('ovo', 'dana', 'bank'), required=True)
+        parser.add_argument('payment_type', location='json', choices=('OVO', 'DANA', 'Jenius', 'GOPAY'), required=True)
         args = parser.parse_args()
 
         # get amount
