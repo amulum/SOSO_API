@@ -1,4 +1,4 @@
-trigger
+first commit
 SOSO_PROJECT
 E-Commerce ini berisi dengan product skincare dan cosmetic yg saat ini tengah banyak peminatnya
 Fitur di dalamnya mengedepankan penggolongan produk yang lebih spesifik yaitu filter berdasarkan Department, Categorie, dan Sub-Categorie.
