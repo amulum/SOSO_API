@@ -50,7 +50,8 @@ class TestSellerPostProduct():
             "name" : "toneup cream",
             "sub_name" : "shade beige",
             "price" : 36000,
-            "discount" : 20
+            "discount" : 20,
+            "image_path": "image"
         }
         res = client.post('/seller/product', json=data, headers={'Authorization': 'Bearer ' + token})
         res_json = json.loads(res.data)
@@ -78,7 +79,7 @@ class TestSellerPostProduct():
     def test_seller_get_stock_get_valid(self,client):
         token = create_token('seller')
         data = {
-            "stock_pid" : 7,
+            "stock_pid" : 3,
         }
         res = client.get('/seller/product/stock', json=data, headers={'Authorization': 'Bearer ' + token})
         res_json = json.loads(res.data)
@@ -103,11 +104,13 @@ class TestSellerPostProduct():
             "name" : "toneup cream",
             "sub_name" : "shade beige",
             "price" : 36000,
-            "discount" : 20
+            "discount" : 20,
+            "image_path": "image"
         }
         res = client.put('/seller/product', json=data, headers={'Authorization': 'Bearer ' + token})
         res_json = json.loads(res.data)
         assert res.status_code == 200
+
     def test_seller_put_product_nodiscount(self,client):
         token = create_token('seller')
         data = {
@@ -117,7 +120,8 @@ class TestSellerPostProduct():
             "subcategory_id": 7,
             "name" : "toneup cream",
             "sub_name" : "shade beige",
-            "price" : 36000
+            "price" : 36000,
+            "image_path": "image"
         }
         res = client.put('/seller/product', json=data, headers={'Authorization': 'Bearer ' + token})
         res_json = json.loads(res.data)
@@ -132,7 +136,9 @@ class TestSellerPostProduct():
             "subcategory_id": 7,
             "name" : "toneup cream",
             "sub_name" : "shade beige",
-            "price" : 36000
+            "price" : 36000,
+            "image_path": "image"
+
         }
         res = client.put('/seller/product', json=data, headers={'Authorization': 'Bearer ' + token})
         res_json = json.loads(res.data)

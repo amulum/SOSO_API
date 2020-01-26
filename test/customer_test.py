@@ -101,6 +101,7 @@ class TestCustomerSelf():
 
 class TestGetProduct():
     reset_db()
+
     def test_valid_user_get_product_all(self, client):
         token = create_token('user')
         data = {
@@ -136,7 +137,7 @@ class TestGetProduct():
             "sort" : "desc",
             "name" : "bb cream"
         }
-        res = client.get('/user/product', json=data, headers={'Authorization': 'Bearer ' + token})
+        res = client.post('/user/product', json=data, headers={'Authorization': 'Bearer ' + token})
         res_json = json.loads(res.data)
         assert res.status_code == 200
 
@@ -149,7 +150,7 @@ class TestGetProduct():
             "sort" : "desc",
             "name" : "lalallalla"
         }
-        res = client.get('/user/product', json=data, headers={'Authorization': 'Bearer ' + token})
+        res = client.post('/user/product', json=data, headers={'Authorization': 'Bearer ' + token})
         res_json = json.loads(res.data)
         assert res.status_code == 404
 
@@ -244,9 +245,9 @@ class TestCustomerAddress():
     def test_get_valid_address_bag(self, client):
         token = create_token('user')
         data = {
-            "address_name" : "kampus"
+            "name" : "rumah"
         }
-        res = client.get('/user/me/address', json=data, headers={'Authorization': 'Bearer ' + token})
+        res = client.post('/user/address', json=data, headers={'Authorization': 'Bearer ' + token})
         res_json = json.loads(res.data)
         assert res.status_code == 200
 
@@ -255,32 +256,32 @@ class TestCustomerAddress():
         data = {
 
         }
-        res = client.get('/user/me/address', json=data, headers={'Authorization': 'Bearer ' + token})
+        res = client.post('/user/me/address', json=data, headers={'Authorization': 'Bearer ' + token})
         res_json = json.loads(res.data)
         assert res.status_code == 200
 
-    def test_delete_addr(self, client):
+    def test_delete_addr_valid(self, client):
         token = create_token('user')
         data = {
-            "address_name" : "kampus"
+            "name" : "kampus"
         }
-        res = client.get('/user/me/address', json=data, headers={'Authorization': 'Bearer ' + token})
+        res = client.post('/user/me/address', json=data, headers={'Authorization': 'Bearer ' + token})
         res_json = json.loads(res.data)
         assert res.status_code == 200
 
-    def test_delete_addr(self, client):
+    def test_delete_addr_invalid(self, client):
         token = create_token('user')
         data = {
-            "address_name" : "lalalla"
+            "name" : "lalalla"
         }
-        res = client.get('/user/me/address', json=data, headers={'Authorization': 'Bearer ' + token})
+        res = client.post('/user/address', json=data, headers={'Authorization': 'Bearer ' + token})
         res_json = json.loads(res.data)
         assert res.status_code == 404
     
     def test_add_order(self,client):
         token = create_token('user')
         data = {
-            "address_name" : "rumah"
+            "name" : "rumah"
         }
         res = client.post('/user/order', json=data, headers={'Authorization': 'Bearer ' + token})
         res_json = json.loads(res.data)
@@ -290,7 +291,7 @@ class TestCustomerAddress():
         token = create_token('user')
         data = {
             'payment_oid' : 2,
-            'payment_type' : 'ovo'
+            'payment_type' : 'OVO'
         }
         res = client.post('/user/payment', json=data, headers={'Authorization': 'Bearer ' + token})
         res_json = json.loads(res.data)
