@@ -248,8 +248,8 @@ def create_token(person):
     if person =='admin':
         cachename = "test-admin-token"
         data = {
-            'username': 'yuyyum',
-            'password': 'jg46!32B'
+            'username': 'admin',
+            'password': 'admin'
         }
 
     elif person == 'seller':

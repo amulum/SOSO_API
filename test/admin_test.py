@@ -41,8 +41,7 @@ class TestAdminRegister():
 
         assert res.status_code == 400
 
-class AdminRootPath():
-    reset_db()
+class TestAdminRootPath():
     # get info admin by username
     def test_valid_alladmin_by_username(self, client):
         token = create_token('admin')
@@ -104,7 +103,7 @@ class TestAdminForSeller():
         res_json = json.loads(res.data)
 
         assert res.status_code == 200
-    def test_get_seller_success(self, client):
+    def test_get_seller_success_by_username(self, client):
         token = create_token('admin')
         data = {
             'username': 'brand2-VS',
@@ -113,7 +112,7 @@ class TestAdminForSeller():
         res_json = json.loads(res.data)
 
         assert res.status_code == 200
-    def test_get_seller_success(self, client):
+    def test_get_seller_success_by_brand(self, client):
         token = create_token('admin')
         data = {
             'brand_name': 'emina',
@@ -181,7 +180,7 @@ class TestAdminForSeller():
 class TestAdminForCust():
 
     # get customer by id or username and all
-    def test_get_seller_success(self, client):
+    def test_get_cust_success(self, client):
         token = create_token('admin')
         data = {
             'id': '1',
@@ -190,7 +189,7 @@ class TestAdminForCust():
         res_json = json.loads(res.data)
 
         assert res.status_code == 200
-    def test_get_seller_success(self, client):
+    def test_get_cust_success_username(self, client):
         token = create_token('admin')
         data = {
             'username': 'kalila',
@@ -200,7 +199,7 @@ class TestAdminForCust():
 
         assert res.status_code == 200
 
-    def test_get_seller_failed(self, client):
+    def test_get_cust_failed(self, client):
         token = create_token('admin')
         data = {
             'username': 'lallala',
@@ -210,11 +209,11 @@ class TestAdminForCust():
 
         assert res.status_code == 404
 
-    def test_get_allseller_success(self, client):
+    def test_get_allcust_success(self, client):
         token = create_token('admin')
         data = {
         }
-        res = client.get('/admin/seller', json=data, headers={'Authorization': 'Bearer ' + token})
+        res = client.get('/admin/user', json=data, headers={'Authorization': 'Bearer ' + token})
         res_json = json.loads(res.data)
 
         assert res.status_code == 200
@@ -229,7 +228,7 @@ class TestAdminForCust():
         res_json = json.loads(res.data)
         assert res.status_code == 200
 
-    def test_delete_seller_success(self, client):
+    def test_delete_seller_success_username(self, client):
         token = create_token('admin')
         data = {
             'username': 'cust2',
@@ -238,7 +237,7 @@ class TestAdminForCust():
         res_json = json.loads(res.data)
         assert res.status_code == 200
 
-    def test_delete_seller_success(self, client):
+    def test_delete_seller_success_username_invalid(self, client):
         token = create_token('admin')
         data = {
             'username': 'MAMAAMM',
@@ -247,12 +246,12 @@ class TestAdminForCust():
         res_json = json.loads(res.data)
         assert res.status_code == 404
     
-class AdminForProduct():
+class TestAdminForProduct():
     def test_get_popular_item(self, client):
         token = create_token('admin')
         data = {
         }
-        res = client.get('/admin/product', json=data, headers={'Authorization': 'Bearer ' + token})
+        res = client.get('/admin/popular', json=data, headers={'Authorization': 'Bearer ' + token})
         res_json = json.loads(res.data)
         assert res.status_code == 200
 

@@ -63,7 +63,7 @@ class TestEditSelef():
         assert res.status_code == 400
     
     # patch method only can edit 1 element
-    def test_valid_patch_method(self, client):
+    def test_valid_patch_method_invalid(self, client):
         token = create_token('user')
         data = {
             "first_name" : "test123",
@@ -90,7 +90,7 @@ class TestEditSelef():
 
 class TestCustomerSelf():
     reset_db()
-    def test_valid_get_info_self(self, client):
+    def test_valid_get_info_self_user(self, client):
         token = create_token('user')
         data = {
         }
@@ -102,7 +102,7 @@ class TestCustomerSelf():
 class TestGetProduct():
     reset_db()
 
-    def test_valid_user_get_product_all(self, client):
+    def test_valid_user_get_product_all_order_asc(self, client):
         token = create_token('user')
         data = {
             "page" : 1,
@@ -111,11 +111,11 @@ class TestGetProduct():
             "sort" : "asc",
             "name" : "bb cream"
         }
-        res = client.get('/user/product', json=data, headers={'Authorization': 'Bearer ' + token})
+        res = client.post('/user/product', json=data, headers={'Authorization': 'Bearer ' + token})
         res_json = json.loads(res.data)
         assert res.status_code == 200
         
-    def test_valid_user_get_product_all(self, client):
+    def test_valid_user_get_product_all_order_id(self, client):
         token = create_token('user')
         data = {
             "page" : 1,
@@ -124,7 +124,7 @@ class TestGetProduct():
             "sort" : "desc",
             "name" : "bb cream"
         }
-        res = client.get('/user/product', json=data, headers={'Authorization': 'Bearer ' + token})
+        res = client.post('/user/product', json=data, headers={'Authorization': 'Bearer ' + token})
         res_json = json.loads(res.data)
         assert res.status_code == 200
 
@@ -141,7 +141,7 @@ class TestGetProduct():
         res_json = json.loads(res.data)
         assert res.status_code == 200
 
-    def test_valid_get_info_self(self, client):
+    def test_invalid_product_not_found(self, client):
         token = create_token('user')
         data = {
             "page" : 1,
@@ -164,7 +164,7 @@ class TestCustomerBag():
         res_json = json.loads(res.data)
         assert res.status_code == 200
     # post product
-    def test_validpost_bag(self, client):
+    def test_valid_post_bag_plus(self, client):
         token = create_token('user')
         data = {
             "product_id" : 10,
@@ -173,7 +173,7 @@ class TestCustomerBag():
         res = client.post('/user/mybag', json=data, headers={'Authorization': 'Bearer ' + token})
         res_json = json.loads(res.data)
         assert res.status_code == 200
-    def test_validpost_bag(self, client):
+    def test_valid_post_bag_minus(self, client):
         token = create_token('user')
         data = {
             "product_id" : 10,
@@ -183,7 +183,7 @@ class TestCustomerBag():
         res_json = json.loads(res.data)
         assert res.status_code == 200
 
-    def test_valid_patch_bag(self, client):
+    def test_valid_patch_bag_product_found(self, client):
         token = create_token('user')
         data = {
             "product_id" : 10,
@@ -193,7 +193,7 @@ class TestCustomerBag():
         res_json = json.loads(res.data)
         assert res.status_code == 200
 
-    def test_valid_patch_bag(self, client):
+    def test_valid_patch_bag_not_found(self, client):
         token = create_token('user')
         data = {
             "product_id" : 99,
@@ -256,16 +256,16 @@ class TestCustomerAddress():
         data = {
 
         }
-        res = client.post('/user/me/address', json=data, headers={'Authorization': 'Bearer ' + token})
+        res = client.post('/user/address', json=data, headers={'Authorization': 'Bearer ' + token})
         res_json = json.loads(res.data)
         assert res.status_code == 200
 
     def test_delete_addr_valid(self, client):
         token = create_token('user')
         data = {
-            "name" : "kampus"
+            "address_name" : "kampus"
         }
-        res = client.post('/user/me/address', json=data, headers={'Authorization': 'Bearer ' + token})
+        res = client.delete('/user/me/address', json=data, headers={'Authorization': 'Bearer ' + token})
         res_json = json.loads(res.data)
         assert res.status_code == 200
 
